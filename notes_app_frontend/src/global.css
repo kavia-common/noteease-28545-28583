@@ -20,6 +20,8 @@ html {
     Arial,
     "Noto Sans",
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * { box-sizing: border-box; }
@@ -27,7 +29,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: #f9fafb;
-  color: #111827;
+  background-color: #f9fafb; /* Ocean Professional background */
+  color: #111827; /* Ocean Professional text */
   line-height: inherit;
 }

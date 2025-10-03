@@ -1,7 +1,7 @@
 :root {
   /* Ocean Professional palette */
-  --color-primary: #2563EB;
-  --color-secondary: #F59E0B;
+  --color-primary: #2563EB; /* primary */
+  --color-secondary: #F59E0B; /* secondary/success accent */
   --color-error: #EF4444;
   --color-text: #111827;
   --color-bg: #f9fafb;
@@ -28,21 +28,28 @@
   --sp-32: 32px;
 
   /* Typography */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  --fs-base: 16px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --fs-base: 16px;   /* base 16 -> 8px scale */
   --lh-base: 1.5;
 
   /* Focus ring */
   --focus-ring: 2px solid rgba(37, 99, 235, 0.6);
   --focus-offset: 2px;
 
-  /* Header gradient */
+  /* Header gradient (Ocean Professional subtle) */
   --header-grad-from: rgba(59, 130, 246, 0.10);
   --header-grad-to: rgba(249, 250, 251, 1);
+
+  /* Sizes from Figma mapping */
+  --nav-height: 56px;        /* navbar height */
+  --sidebar-width: 280px;    /* sidebar base width */
+  --icon-24: 24px;           /* standard icon size */
+  --icon-20: 20px;           /* smaller icon size */
+  --card-radius: var(--radius-12);
 }
 
 /* Base overrides for this route */
-.app-shell { min-height: 100dvh; display: flex; flex-direction: column; }
+.app-shell { min-height: 100dvh; display: flex; flex-direction: column; font-family: var(--font-sans); }
 .visually-hidden {
   position: absolute !important;
   height: 1px; width: 1px;
@@ -59,7 +66,8 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--sp-12);
-  padding: var(--sp-12) var(--sp-16);
+  padding-inline: var(--sp-16);
+  height: var(--nav-height);
   background: linear-gradient(180deg, var(--header-grad-from), var(--header-grad-to));
   backdrop-filter: saturate(1.1);
   border-bottom: 1px solid rgba(17, 24, 39, 0.06);
@@ -71,7 +79,9 @@
   gap: var(--sp-8);
   margin: 0;
   font-weight: 700;
+  /* Title approximates 22–24 px on base breakpoint for strong branding */
   font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1; /* tighter for consistent vertical alignment within 56px bar */
   letter-spacing: -0.01em;
 }
 .brand-logo { display: inline-flex; }
@@ -86,10 +96,10 @@
   border: 1px solid rgba(17, 24, 39, 0.08);
   border-radius: 999px;
   padding-inline: var(--sp-12);
-  height: 40px;
+  height: 40px; /* Figma-aligned search field height */
   box-shadow: var(--shadow-1);
 }
-.search-icon { color: #6b7280; margin-right: var(--sp-8); }
+.search-icon { color: #6b7280; margin-right: var(--sp-8); width: var(--icon-20); height: var(--icon-20); }
 .search-input {
   border: 0;
   outline: none;
@@ -101,7 +111,7 @@
 }
 .search-input::placeholder { color: #9ca3af; }
 
-/* Menu toggle (hidden >=1024px) */
+/* Buttons and icons */
 .icon-btn {
   border: 0;
   background: var(--color-surface);
@@ -110,14 +120,20 @@
   transition: transform 120ms ease, background-color 180ms ease, box-shadow 180ms ease;
   cursor: pointer;
 }
-.menu-toggle { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(17,24,39,0.08); }
+.menu-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 40px; height: 40px; /* compact control */
+  border-radius: 999px;
+  border: 1px solid rgba(17,24,39,0.08);
+}
 @media (min-width: 1024px) { .menu-toggle { display: none; } }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-8);
-  height: 40px;
+  height: 40px; /* primary button height */
   padding: 0 var(--sp-16);
   border-radius: 999px;
   border: 1px solid rgba(17, 24, 39, 0.08);
@@ -126,7 +142,7 @@
   cursor: pointer;
   box-shadow: var(--shadow-1);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* for ripple */
   transition: transform 120ms ease, box-shadow 200ms ease, background-color 200ms ease;
 }
 .btn:hover { box-shadow: var(--shadow-2); transform: translateY(-1px); }
@@ -147,13 +163,13 @@
 
 /* Icons */
 .icon { display: block; }
-.icon-20 { width: 20px; height: 20px; }
-.icon-24 { width: 24px; height: 24px; }
+.icon-20 { width: var(--icon-20); height: var(--icon-20); }
+.icon-24 { width: var(--icon-24); height: var(--icon-24); }
 
 /* Layout */
 .app-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: var(--sidebar-width) 1fr; /* Sidebar width */
   gap: var(--sp-16);
   padding: var(--sp-16);
 }
@@ -162,11 +178,11 @@
 /* Sidebar */
 .sidebar {
   position: sticky;
-  top: calc(56px + var(--sp-16));
+  top: calc(var(--nav-height) + var(--sp-16));
   align-self: start;
   background: var(--color-surface);
   border: 1px solid rgba(17, 24, 39, 0.08);
-  border-radius: var(--radius-12);
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow-1);
   padding: var(--sp-16);
 }
@@ -200,7 +216,7 @@
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--sp-16);
+  gap: var(--sp-16); /* 16px gap aligns with 8px scale */
 }
 @media (max-width: 639.98px) { .notes-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 640px) and (max-width: 1023.98px) { .notes-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
@@ -210,15 +226,15 @@
   grid-column: span 12;
   background: var(--color-surface);
   border: 1px solid rgba(17, 24, 39, 0.08);
-  border-radius: var(--radius-12);
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow-1);
-  padding: var(--sp-16);
+  padding: var(--sp-16);      /* card padding 16px */
   display: grid;
-  gap: var(--sp-12);
+  gap: var(--sp-12);          /* internal gaps follow 8px scale */
   transition: box-shadow 180ms ease, transform 120ms ease, border-color 160ms ease;
 }
-@media (min-width: 640px) { .note-card { grid-column: span 4; } }
-@media (min-width: 1024px) { .note-card { grid-column: span 3; } }
+@media (min-width: 640px) { .note-card { grid-column: span 4; } }   /* 2 cols on small tablets (8-col grid) */
+@media (min-width: 1024px) { .note-card { grid-column: span 3; } }  /* 4 cols on desktop (12-col grid) */
 .note-card:hover { box-shadow: var(--shadow-2); transform: translateY(-1px); }
 .note-card:active { transform: translateY(0); }
 .note-card:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
@@ -227,7 +243,7 @@
 .note-title {
   margin: 0;
   font-weight: 700;
-  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* approx 16–18px scale */
   line-height: 1.25;
 }
 .note-excerpt {
@@ -254,7 +270,7 @@
   align-items: center;
   gap: var(--sp-6);
   padding: 2px var(--sp-8);
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.12); /* secondary subtle */
   color: #92400e;
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-radius: 999px;
@@ -268,7 +284,7 @@
   position: fixed;
   right: var(--sp-16);
   bottom: var(--sp-16);
-  width: 56px; height: 56px;
+  width: 56px; height: 56px; /* compact for mobile, per Ocean Professional */
   border-radius: 999px;
   background: var(--color-primary);
   color: #fff;

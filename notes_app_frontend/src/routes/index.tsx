@@ -128,7 +128,7 @@ export default component$(() => {
           aria-expanded={sidebarOpen.value ? "true" : "false"}
           onClick$={toggleSidebar$}
         >
-          <svg class="icon icon-24" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="icon icon-24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path
               fill="currentColor"
               d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"
@@ -138,7 +138,7 @@ export default component$(() => {
 
         <h1 class="brand">
           <span class="brand-logo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="icon icon-24">
+            <svg viewBox="0 0 24 24" class="icon icon-24" aria-hidden="true" focusable="false">
               <path
                 fill="currentColor"
                 d="M12 2l4 4h-3v6h-2V6H8l4-4zm-7 9h14v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9z"
@@ -154,6 +154,7 @@ export default component$(() => {
               class="icon icon-20 search-icon"
               viewBox="0 0 24 24"
               aria-hidden="true"
+              focusable="false"
             >
               <path
                 fill="currentColor"
@@ -167,6 +168,7 @@ export default component$(() => {
               type="search"
               placeholder="Search notes…"
               aria-label="Search notes"
+              enterKeyHint="search"
             />
           </div>
           <button
@@ -177,7 +179,7 @@ export default component$(() => {
             onClick$={createNote$}
           >
             <span class="btn-ripple" aria-hidden="true"></span>
-            <svg class="icon icon-20" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="icon icon-20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path
                 fill="currentColor"
                 d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6z"
@@ -325,7 +327,7 @@ export default component$(() => {
         ref={fabRef}
         onClick$={createNote$}
       >
-        <svg class="icon icon-24" viewBox="0 0 24 24" aria-hidden="true">
+        <svg class="icon icon-24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path fill="currentColor" d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6z" />
         </svg>
       </button>
