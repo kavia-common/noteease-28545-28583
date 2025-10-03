@@ -53,8 +53,7 @@ export default defineConfig(({ command, mode }): UserConfig => {
       },
       port: 3000,
       host: '0.0.0.0',
-      // Note: 'allowedHosts' is not a valid Vite ServerOptions field. If host restrictions are needed,
-      // configure via reverse proxy or dev server middleware instead.
+      // If host restrictions are needed, implement via proxy or middleware.
     },
     preview: {
       headers: {
