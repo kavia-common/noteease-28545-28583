@@ -11,6 +11,7 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 // PUBLIC_INTERFACE
 export default component$(() => {
+  // Keep any minimal template styles; route provides main theme
   useStyles$(styles);
   return (
     <main>

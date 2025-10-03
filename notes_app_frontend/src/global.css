@@ -1,15 +1,9 @@
 /**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles for the ultralight Qwik template.
- * Uses a minimalistic light theme with specified color scheme.
+ * Global base styles.
+ * Keep lightweight globals; route styles provide the Ocean Professional theme.
  */
-
 :root {
-  --primary-color: #000000;
-  --secondary-color: #333333;
-  --accent-color: #0078d4;
-  --background-color: #ffffff;
+  color-scheme: light;
 }
 
 html {
@@ -28,14 +22,12 @@ html {
     sans-serif;
 }
 
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--primary-color);
+  background-color: #f9fafb;
+  color: #111827;
   line-height: inherit;
-}
-
-* {
-  box-sizing: border-box;
 }
