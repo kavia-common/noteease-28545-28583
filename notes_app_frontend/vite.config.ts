@@ -53,7 +53,8 @@ export default defineConfig(({ command, mode }): UserConfig => {
       },
       port: 3000,
       host: '0.0.0.0',
-      allowedHosts: ['.kavia.ai'],
+      // Note: 'allowedHosts' is not a valid Vite ServerOptions field. If host restrictions are needed,
+      // configure via reverse proxy or dev server middleware instead.
     },
     preview: {
       headers: {
