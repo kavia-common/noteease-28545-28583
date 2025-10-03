@@ -7,16 +7,16 @@
   --color-bg: #f9fafb;
   --color-surface: #ffffff;
 
-  /* Elevation and shadows - soft */
-  --shadow-1: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 3px rgba(17, 24, 39, 0.1);
-  --shadow-2: 0 10px 15px -3px rgba(17, 24, 39, 0.1), 0 4px 6px -4px rgba(17, 24, 39, 0.1);
+  /* Elevation and shadows - soft (card), stronger (FAB) */
+  --shadow-1: 0 2px 6px rgba(0, 0, 0, 0.12); /* subtle for surfaces */
+  --shadow-2: 0 6px 18px rgba(0, 0, 0, 0.20); /* stronger for hover/FAB */
 
   /* Radii */
   --radius-8: 8px;
   --radius-10: 10px;
   --radius-12: 12px;
 
-  /* Spacing (8px grid) */
+  /* Spacing (8px grid; align to Figma exacts when specified) */
   --sp-2: 2px;
   --sp-4: 4px;
   --sp-6: 6px;
@@ -28,24 +28,32 @@
   --sp-32: 32px;
 
   /* Typography */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --fs-base: 16px;   /* base 16 -> 8px scale */
+  --font-sans: "Helvetica Neue", Arial, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --fs-base: 16px;
   --lh-base: 1.5;
 
   /* Focus ring */
   --focus-ring: 2px solid rgba(37, 99, 235, 0.6);
   --focus-offset: 2px;
 
-  /* Header gradient (Ocean Professional subtle) */
-  --header-grad-from: rgba(59, 130, 246, 0.10);
-  --header-grad-to: rgba(249, 250, 251, 1);
+  /* Header: match Figma bar height exactly */
+  --nav-height: 56px;
 
-  /* Sizes from Figma mapping */
-  --nav-height: 56px;        /* navbar height */
-  --sidebar-width: 280px;    /* sidebar base width */
-  --icon-24: 24px;           /* standard icon size */
-  --icon-20: 20px;           /* smaller icon size */
-  --card-radius: var(--radius-12);
+  /* Sidebar: match requested width */
+  --sidebar-width: 280px;
+
+  /* Icon sizes */
+  --icon-24: 24px;
+  --icon-20: 20px;
+
+  /* Cards */
+  --card-radius: 12px;
+
+  /* Figma header uses clean solid background (no gradient for Figma parity) */
+  --header-bg: #ffffff;
+
+  /* Divider thickness */
+  --divider: 1px;
 }
 
 /* Base overrides for this route */
@@ -57,7 +65,7 @@
   white-space: nowrap; border: 0; padding: 0; margin: -1px;
 }
 
-/* Header */
+/* Header — align to Figma: height 56, padding 16/20, title size 32/700 */
 .app-header {
   position: sticky;
   top: 0;
@@ -66,11 +74,10 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--sp-12);
-  padding-inline: var(--sp-16);
+  padding: 0 var(--sp-20);
   height: var(--nav-height);
-  background: linear-gradient(180deg, var(--header-grad-from), var(--header-grad-to));
-  backdrop-filter: saturate(1.1);
-  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  background: var(--header-bg);
+  border-bottom: var(--divider) solid rgba(17, 24, 39, 0.06);
 }
 
 .brand {
@@ -79,24 +86,23 @@
   gap: var(--sp-8);
   margin: 0;
   font-weight: 700;
-  /* Title approximates 22–24 px on base breakpoint for strong branding */
-  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  line-height: 1; /* tighter for consistent vertical alignment within 56px bar */
-  letter-spacing: -0.01em;
+  font-size: 32px; /* typo_14 per Figma */
+  line-height: 1.2;
+  letter-spacing: normal;
 }
 .brand-logo { display: inline-flex; }
 
-/* Search + actions */
+/* Header toolbar and search */
 .header-actions { display: inline-flex; align-items: center; gap: var(--sp-12); }
 .search-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
   background: var(--color-surface);
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: var(--divider) solid rgba(17, 24, 39, 0.08);
   border-radius: 999px;
   padding-inline: var(--sp-12);
-  height: 40px; /* Figma-aligned search field height */
+  height: 40px; /* compact search field */
   box-shadow: var(--shadow-1);
 }
 .search-icon { color: #6b7280; margin-right: var(--sp-8); width: var(--icon-20); height: var(--icon-20); }
@@ -106,7 +112,8 @@
   background: transparent;
   min-width: 8rem;
   width: clamp(8rem, 20vw, 20rem);
-  font-size: 0.95rem;
+  font-size: 15px;
+  line-height: 1.4;
   color: var(--color-text);
 }
 .search-input::placeholder { color: #9ca3af; }
@@ -114,29 +121,38 @@
 /* Buttons and icons */
 .icon-btn {
   border: 0;
+  background: rgba(0, 0, 0, 0.04); /* subtle icon surface */
+  color: var(--color-text);
+  transition: transform 120ms ease, background-color 160ms ease, box-shadow 160ms ease;
+  cursor: pointer;
+  width: 50px; height: 50px; /* Figma */
+  border-radius: 25px;       /* Figma circular */
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-1);
+}
+.icon-btn:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-1px); }
+.icon-btn:active { background: rgba(0, 0, 0, 0.12); transform: translateY(0); }
+.icon-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+
+/* Menu toggle (mobile only) */
+.menu-toggle {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: var(--divider) solid rgba(17,24,39,0.08);
   background: var(--color-surface);
   box-shadow: var(--shadow-1);
-  color: var(--color-text);
-  transition: transform 120ms ease, background-color 180ms ease, box-shadow 180ms ease;
-  cursor: pointer;
-}
-.menu-toggle {
-  display: inline-grid;
-  place-items: center;
-  width: 40px; height: 40px; /* compact control */
-  border-radius: 999px;
-  border: 1px solid rgba(17,24,39,0.08);
 }
 @media (min-width: 1024px) { .menu-toggle { display: none; } }
 
+/* Primary button */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-8);
-  height: 40px; /* primary button height */
+  height: 40px;
   padding: 0 var(--sp-16);
   border-radius: 999px;
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: var(--divider) solid rgba(17, 24, 39, 0.08);
   background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
@@ -169,9 +185,11 @@
 /* Layout */
 .app-layout {
   display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr; /* Sidebar width */
+  grid-template-columns: var(--sidebar-width) 1fr;
   gap: var(--sp-16);
   padding: var(--sp-16);
+  max-width: 1200px;
+  margin-inline: auto;
 }
 @media (max-width: 1023.98px) { .app-layout { grid-template-columns: 1fr; } }
 
@@ -181,18 +199,18 @@
   top: calc(var(--nav-height) + var(--sp-16));
   align-self: start;
   background: var(--color-surface);
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: var(--divider) solid rgba(17, 24, 39, 0.08);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-1);
   padding: var(--sp-16);
 }
-.sidebar-title { margin: 0 0 var(--sp-12); font-weight: 600; font-size: 0.95rem; color: #374151; }
+.sidebar-title { margin: 0 0 var(--sp-12); font-weight: 600; font-size: 15px; line-height: 1.35; color: #374151; }
 .category-list { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--sp-8); }
 .category-item {
   width: 100%;
   text-align: left;
   background: transparent;
-  border: 1px solid rgba(17,24,39,0.08);
+  border: var(--divider) solid rgba(17,24,39,0.08);
   color: var(--color-text);
   padding: var(--sp-8) var(--sp-12);
   border-radius: var(--radius-10);
@@ -202,7 +220,7 @@
 .category-item:hover { background: rgba(37, 99, 235, 0.06); border-color: rgba(37, 99, 235, 0.25); }
 .category-item:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 .category-item.is-active {
-  background: rgba(37, 99, 235, 0.1);
+  background: rgba(37, 99, 235, 0.10);
   border-color: rgba(37, 99, 235, 0.35);
   color: #1e40af;
   font-weight: 600;
@@ -211,30 +229,29 @@
 /* Main */
 .main { min-width: 0; }
 
-/* Notes grid */
+/* Notes grid/list — Figma mobile is single column stack with 24px page padding */
 .notes-section { display: block; }
 .notes-grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--sp-16); /* 16px gap aligns with 8px scale */
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-16); /* 16px between cards per Figma */
+  padding-inline: var(--sp-24);
 }
-@media (max-width: 639.98px) { .notes-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (min-width: 640px) and (max-width: 1023.98px) { .notes-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
 
-/* Card */
+/* Card — match Figma 365xH on 414 viewport, radius 12, padding 16 */
 .note-card {
-  grid-column: span 12;
+  width: 100%;
+  max-width: 365px;
+  margin-inline: auto;
   background: var(--color-surface);
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: var(--divider) solid rgba(17, 24, 39, 0.08);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-1);
-  padding: var(--sp-16);      /* card padding 16px */
+  padding: var(--sp-16);
   display: grid;
-  gap: var(--sp-12);          /* internal gaps follow 8px scale */
-  transition: box-shadow 180ms ease, transform 120ms ease, border-color 160ms ease;
+  gap: var(--sp-12);
+  transition: box-shadow 160ms ease, transform 120ms ease, border-color 160ms ease, background-color 160ms ease;
 }
-@media (min-width: 640px) { .note-card { grid-column: span 4; } }   /* 2 cols on small tablets (8-col grid) */
-@media (min-width: 1024px) { .note-card { grid-column: span 3; } }  /* 4 cols on desktop (12-col grid) */
 .note-card:hover { box-shadow: var(--shadow-2); transform: translateY(-1px); }
 .note-card:active { transform: translateY(0); }
 .note-card:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
@@ -242,15 +259,20 @@
 .note-header { display: grid; gap: var(--sp-4); }
 .note-title {
   margin: 0;
-  font-weight: 700;
-  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* approx 16–18px scale */
-  line-height: 1.25;
+  font-weight: 600;         /* typo_13 semibold */
+  font-size: 18px;          /* Figma title size */
+  line-height: 1.35;
+  letter-spacing: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;    /* allow up to three lines like tall title boxes */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .note-excerpt {
   margin: 0;
   color: #374151;
   font-weight: 400;
-  font-size: 0.95rem;
+  font-size: 15px;
   line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -270,7 +292,7 @@
   align-items: center;
   gap: var(--sp-6);
   padding: 2px var(--sp-8);
-  background: rgba(245, 158, 11, 0.12); /* secondary subtle */
+  background: rgba(245, 158, 11, 0.12);
   color: #92400e;
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-radius: 999px;
@@ -279,13 +301,13 @@
 }
 .updated { color: #6b7280; font-size: 12px; white-space: nowrap; }
 
-/* Floating Action Button */
+/* Floating Action Button — Figma 70x70, offset 24px, icon 28px */
 .fab {
   position: fixed;
-  right: var(--sp-16);
-  bottom: var(--sp-16);
-  width: 56px; height: 56px; /* compact for mobile, per Ocean Professional */
-  border-radius: 999px;
+  right: var(--sp-24);
+  bottom: var(--sp-24);
+  width: 70px; height: 70px;
+  border-radius: 35px;
   background: var(--color-primary);
   color: #fff;
   border: 0;
@@ -295,12 +317,12 @@
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 200ms ease, filter 200ms ease;
 }
-.fab:hover { transform: translateY(-2px); box-shadow: 0 16px 24px -8px rgba(17,24,39,0.2), 0 6px 10px -6px rgba(17,24,39,0.16); }
+.fab:hover { transform: translateY(-2px); box-shadow: 0 16px 24px -8px rgba(0,0,0,0.25), 0 6px 10px -6px rgba(0,0,0,0.20); }
 .fab:active { transform: translateY(0); filter: brightness(0.98); }
 .fab:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
-@media (min-width: 1024px) { .fab { display: none; } }
+.icon-28 { width: 28px; height: 28px; }
 
-/* Sidebar collapse on narrow screens */
+/* Sidebar collapse on narrow screens (unchanged behavior) */
 @media (max-width: 1023.98px) {
   .sidebar {
     position: fixed;

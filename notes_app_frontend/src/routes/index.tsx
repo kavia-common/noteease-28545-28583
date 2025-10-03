@@ -327,7 +327,7 @@ export default component$(() => {
         ref={fabRef}
         onClick$={createNote$}
       >
-        <svg class="icon icon-24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg class="icon icon-28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path fill="currentColor" d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6z" />
         </svg>
       </button>
